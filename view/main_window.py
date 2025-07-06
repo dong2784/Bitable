@@ -51,6 +51,8 @@ class MainWindow(QMainWindow):
         mw.pb_op_range_0.clicked.connect(self._set_range_0)
         mw.pb_op_range_1.clicked.connect(self._set_range_1)
         mw.pb_op_range_r.clicked.connect(self._set_range_r)
+        mw.pb_op_left_shift.clicked.connect(self._left_shift)
+        mw.pb_op_right_shift.clicked.connect(self._right_shift)
         self._pb_bit_group.idToggled.connect(self._on_pb_bit_toggled)
 
     def _refresh(self):
