@@ -5,14 +5,14 @@ from PySide6.QtUiTools import QUiLoader
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, version):
         super().__init__()
         ui_loader = QUiLoader()
         self._main_widget = ui_loader.load("view/ui/main_window.ui")
         self.setCentralWidget(self._main_widget)
 
-        self.setWindowTitle("Bitable")
-        self.setWindowIcon(QIcon('view/icon/main.ico'))
+        self.setWindowTitle(f"Bitable - {version}")
+        self.setWindowIcon(QIcon('view/icon/main.png'))
         self._value = 0
 
         self._pb_bit_group = QButtonGroup(self)
@@ -24,9 +24,9 @@ class MainWindow(QMainWindow):
         self._refreshing = False
 
     @classmethod
-    def exec(cls):
+    def exec(cls, version):
         app = QApplication()
-        inst = cls()
+        inst = cls(version)
         inst.show()
         sys.exit(app.exec())
 
