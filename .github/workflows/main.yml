@@ -1,0 +1,47 @@
+name: Build with Nuitka
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+          cache-dependency-path: |
+            'requirements.txt'
+
+      - name: Install your Dependencies
+        run: |
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - uses: Nuitka/Nuitka-Action@main
+        with:
+          nuitka-version: main
+          script-name: run.py
+          mode: onefile
+          enable-plugins: pyside6
+          include-data-dir: |
+            view/icon=view/icon
+            view/ui=view/ui
+          include-data-files: |
+            version.json=version.json
+          include-onefile-external-data: |
+            view/icon
+            view/ui
+            version.json
+          output-dir: 'release'
+          output-file: 'Biteable.ext'
+          windows-icon-from-ico: view/icon/main.png
+          windows-console-mode: disable
